@@ -28,7 +28,7 @@ export class GeminiResearchService {
   }
 
   async generateResearch(input: ResearchInput): Promise<ResearchOutput> {
-    const prompt = this.buildAdvancedPrompt(input);
+    const prompt = this.buildStrategicPrompt(input);
     
     try {
       const result = await this.model.generateContent(prompt);
@@ -42,93 +42,102 @@ export class GeminiResearchService {
     }
   }
 
-  private buildAdvancedPrompt(input: ResearchInput): string {
-    return `You are an elite business intelligence analyst specializing in strategic account research for enterprise sales. Your mission is to generate deep, actionable insights that make a BDR sound like they've studied the company for hours.
+  private buildStrategicPrompt(input: ResearchInput): string {
+    return `🎯 MISSION: You are a senior enterprise strategist at Whatfix conducting executive-level pre-call research for ultra-personalized outreach.
 
-COMPANY TO RESEARCH:
-- Company: ${input.companyName}
-- Website: ${input.website}
-${input.linkedinData ? `- Additional Context: ${input.linkedinData}` : ''}
+RESEARCH TARGET:
+Company: ${input.companyName}
+Website: ${input.website}
+${input.linkedinData ? `Additional Context: ${input.linkedinData}` : ''}
 
-ANALYSIS FRAMEWORK:
-You must think like a strategic consultant, not just summarize basic facts. Infer business challenges, competitive dynamics, and growth trajectory based on available signals.
+CONTEXT: Whatfix is a Digital Adoption Platform + Product Analytics solution that helps enterprises onboard users, reduce support tickets, and accelerate software adoption.
 
-REQUIRED OUTPUT SECTIONS (respond with exactly these section headers):
+🔍 ANALYSIS FRAMEWORK:
+Think like a McKinsey consultant preparing a deal strategy document. Provide deep business intelligence, not Wikipedia summaries. Make intelligent inferences based on company signals, industry dynamics, and growth patterns.
 
-**COMPANY_SUMMARY**
-Provide a sophisticated 2-3 sentence analysis covering:
-- Core business model and competitive positioning
-- Industry context and market dynamics
-- Stage of company maturity and strategic focus
+📋 REQUIRED OUTPUT SECTIONS (use exactly these headers):
 
-**RECENT_UPDATES**
-Research and infer recent developments (last 6-12 months):
-- Funding rounds, acquisitions, or major partnerships
-- Product launches or significant feature releases
-- Leadership changes or organizational shifts
-- Market expansion or strategic pivots
-If no specific news is available, make educated inferences based on company stage and industry trends.
+**COMPANY_OVERVIEW**
+Provide a detailed 3-4 sentence analysis covering:
+- Core business model and their specific role in the value chain
+- Industry positioning and competitive landscape context
+- Geographic footprint and operational complexity
+- Business maturity stage and strategic focus areas
+
+**PRODUCT_PORTFOLIO**
+Analyze their offering structure:
+- Major product/service lines and business model (subscription, transactional, hybrid)
+- Channel strategy (direct, partner, reseller networks)
+- Customer segments and go-to-market approach
+- Unique operational characteristics or market differentiators
+
+**RECENT_EVENTS**
+Research and chronologically list recent developments (last 12-18 months):
+- Funding rounds, acquisitions, or strategic partnerships
+- Product launches, feature releases, or platform updates
+- Leadership changes or organizational restructuring
+- Market expansion, ESG initiatives, or regulatory compliance updates
+Format: [Date] - [Event] → Strategic Insight: [What this signals about priorities/direction]
 
 **TECH_STACK**
-Analyze and predict their technology infrastructure:
-- Core development stack (based on job postings, website tech, industry standards)
-- Integration patterns and likely third-party tools
-- Technical challenges they likely face at their scale
-- Modernization needs or technical debt signals
+Intelligent analysis of their technology infrastructure:
+- Core systems they likely use (ERP, CRM, analytics platforms)
+- Integration patterns based on their business model and scale
+- Digital transformation stage and modernization needs
+- Technology challenges at their current scale and complexity
 
 **HIRING_FOCUS**
-Decode their strategic priorities through hiring patterns:
-- Key roles they're likely prioritizing (engineering, sales, ops)
-- Skills gaps that indicate growth areas or challenges
+Decode strategic priorities through talent acquisition:
+- Key roles being prioritized (from careers pages, LinkedIn, job boards)
+- Skills gaps indicating growth areas or operational challenges
 - Team expansion signals and what they reveal about roadmap
-- Internal capability building vs external partnership trends
+- Internal capability building vs external partnership strategies
 
 **PAIN_POINTS**
-Generate intelligent hypotheses about their challenges:
-- Operational bottlenecks at their current scale
-- Customer experience friction points
-- Process inefficiencies in their likely workflows
-- Technology gaps or integration challenges
-- Growth constraints or scalability issues
+Generate strategic hypotheses about their challenges:
+- Operational bottlenecks given their business model and scale
+- Customer experience friction points across their value chain
+- Process inefficiencies in complex operations or integrations
+- Technology debt or system integration challenges
+- Growth constraints, compliance burdens, or scalability issues
 
 **WHATFIX_OPPORTUNITY**
-Craft a specific, strategic insight:
-- Identify ONE key area where Whatfix could create significant impact
-- Connect their likely pain points to Whatfix's capabilities
-- Quantify potential value (time savings, efficiency gains, etc.)
-- Position Whatfix as strategic enabler, not just a tool
+Craft specific, quantified value propositions:
+- Identify 2-3 key areas where Whatfix DAP + Analytics creates measurable impact
+- Connect their likely pain points to specific Whatfix capabilities
+- Quantify potential outcomes (% reduction in tickets, faster onboarding, etc.)
+- Position Whatfix as strategic enabler for their growth/efficiency goals
 
 **EMAIL_TEMPLATE**
-Write a compelling, research-driven email (150-200 words):
-- Reference specific company context or recent developments
-- Demonstrate understanding of their industry/challenges
-- Position Whatfix strategically, not generically
-- Include a soft, consultative call-to-action
-- Sound like peer-to-peer, not vendor-to-prospect
+Write a consultative email (150-180 words):
+- Open with specific company insight or recent development reference
+- Demonstrate deep understanding of their business challenges
+- Position Whatfix strategically with quantified value
+- Include soft, peer-to-peer call-to-action
+- Sound like a strategic advisor, not a vendor
 
 **LINKEDIN_TEMPLATE**
-Create a conversational LinkedIn DM (50-75 words):
-- Lead with relevant company insight or congratulation
-- Be casual but informed
-- Focus on value, not product features
-- End with easy engagement opportunity
+Create a conversational LinkedIn DM (60-80 words):
+- Lead with relevant company congratulation or insight
+- Be personable but professionally informed
+- Focus on strategic value, not product features
+- End with easy engagement opportunity (not meeting request)
 
-CRITICAL INSTRUCTIONS:
-- Be specific, not generic
-- Show deep business understanding
-- Make intelligent inferences when facts aren't available
-- Sound like an insider, not someone reading their website
-- Focus on strategic value, not feature lists
-- Use confident, consultative language
-- Avoid obvious statements or surface-level observations
+🎯 EXECUTION STANDARDS:
+- Be specific and analytical, avoid generic business speak
+- Make intelligent inferences when direct data isn't available
+- Use confident, consultative language befitting enterprise strategy
+- Include quantified insights and business metrics where possible
+- Demonstrate insider knowledge without stating obvious facts
+- Focus on strategic implications, not surface-level observations
 
-Begin your analysis:`;
+Begin your strategic analysis:`;
   }
 
   private parseResponse(text: string): ResearchOutput {
     const sections = {
-      companySummary: this.extractSection(text, 'COMPANY_SUMMARY'),
-      recentUpdates: this.extractSection(text, 'RECENT_UPDATES'),
+      companySummary: this.extractSection(text, 'COMPANY_OVERVIEW'),
+      recentUpdates: this.extractSection(text, 'RECENT_EVENTS'),
       techStack: this.extractSection(text, 'TECH_STACK'),
       hiringFocus: this.extractSection(text, 'HIRING_FOCUS'),
       painPoints: this.extractSection(text, 'PAIN_POINTS'),
@@ -137,16 +146,16 @@ Begin your analysis:`;
       linkedinTemplate: this.extractSection(text, 'LINKEDIN_TEMPLATE'),
     };
 
-    // Fallback to mock data if parsing fails
+    // Enhanced fallback with strategic context
     return {
-      companySummary: sections.companySummary || "Advanced AI analysis of company positioning and strategic focus.",
-      recentUpdates: sections.recentUpdates || "Recent developments and strategic initiatives based on market intelligence.",
-      techStack: sections.techStack || "Technology infrastructure analysis based on hiring patterns and industry standards.",
-      hiringFocus: sections.hiringFocus || "Strategic hiring priorities indicating growth areas and capability gaps.",
-      painPoints: sections.painPoints || "Intelligent hypotheses about operational challenges and growth constraints.",
-      whatfixInsight: sections.whatfixInsight || "Strategic opportunity for Whatfix to drive measurable business impact.",
-      emailTemplate: sections.emailTemplate || "Personalized outreach message based on comprehensive company analysis.",
-      linkedinTemplate: sections.linkedinTemplate || "Conversational LinkedIn message demonstrating strategic understanding.",
+      companySummary: sections.companySummary || "Strategic analysis of company positioning, value chain role, and competitive dynamics within their industry ecosystem.",
+      recentUpdates: sections.recentUpdates || "Recent strategic developments, partnerships, and initiatives indicating company direction and growth priorities.",
+      techStack: sections.techStack || "Technology infrastructure analysis based on business model complexity, scale requirements, and digital transformation stage.",
+      hiringFocus: sections.hiringFocus || "Strategic hiring priorities revealing internal capability gaps, growth areas, and operational optimization needs.",
+      painPoints: sections.painPoints || "Intelligent hypotheses about operational challenges, growth constraints, and efficiency opportunities at their current scale.",
+      whatfixInsight: sections.whatfixInsight || "Strategic opportunity for Whatfix to drive measurable business impact through digital adoption acceleration and analytics-driven optimization.",
+      emailTemplate: sections.emailTemplate || "Personalized outreach message demonstrating strategic understanding of their business challenges and Whatfix value alignment.",
+      linkedinTemplate: sections.linkedinTemplate || "Conversational LinkedIn message showing industry insight and strategic value proposition relevance.",
     };
   }
 
