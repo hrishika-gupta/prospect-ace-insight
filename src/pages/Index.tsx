@@ -4,7 +4,7 @@ import { ResearchForm } from '@/components/ResearchForm';
 import { ResearchResults } from '@/components/ResearchResults';
 import { ApiKeyInput } from '@/components/ApiKeyInput';
 import { GeminiResearchService } from '@/services/geminiService';
-import { Briefcase, Zap, Target } from 'lucide-react';
+import { Zap, Target, Sparkles } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 export interface ResearchData {
@@ -83,14 +83,16 @@ const Index = () => {
 
   if (!apiKey) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 flex items-center justify-center p-4">
         <div className="w-full max-w-md">
           <div className="text-center mb-8">
-            <div className="bg-blue-600 p-3 rounded-lg w-fit mx-auto mb-4">
-              <Briefcase className="h-8 w-8 text-white" />
+            <div className="bg-gradient-to-br from-blue-600 to-indigo-700 p-4 rounded-2xl w-fit mx-auto mb-6 shadow-xl">
+              <Sparkles className="h-10 w-10 text-white" />
             </div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">BDR Research Tool</h1>
-            <p className="text-gray-600">Strategic intelligence powered by AI</p>
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-slate-900 to-blue-800 bg-clip-text text-transparent mb-3">
+              Deal Intel
+            </h1>
+            <p className="text-xl text-slate-600 font-medium">Your edge in every outreach.</p>
           </div>
           <ApiKeyInput onApiKeySubmit={handleApiKeySubmit} />
         </div>
@@ -99,18 +101,20 @@ const Index = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
-      {/* Header */}
-      <div className="bg-white shadow-sm border-b border-gray-200">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
+      {/* Enhanced Header */}
+      <div className="bg-white/80 backdrop-blur-md shadow-lg border-b border-slate-200/60">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center space-x-3">
-              <div className="bg-blue-600 p-2 rounded-lg">
-                <Briefcase className="h-6 w-6 text-white" />
+          <div className="flex items-center justify-between h-20">
+            <div className="flex items-center space-x-4">
+              <div className="bg-gradient-to-br from-blue-600 to-indigo-700 p-3 rounded-xl shadow-lg">
+                <Sparkles className="h-8 w-8 text-white" />
               </div>
               <div>
-                <h1 className="text-xl font-bold text-gray-900">BDR Research Tool</h1>
-                <p className="text-sm text-gray-500">Strategic intelligence in seconds</p>
+                <h1 className="text-2xl font-bold bg-gradient-to-r from-slate-900 to-blue-800 bg-clip-text text-transparent">
+                  Deal Intel
+                </h1>
+                <p className="text-sm text-slate-600 font-medium">Your edge in every outreach.</p>
               </div>
             </div>
             <button
@@ -119,7 +123,7 @@ const Index = () => {
                 localStorage.removeItem('gemini_api_key');
                 setResults(null);
               }}
-              className="text-sm text-gray-500 hover:text-gray-700"
+              className="text-sm text-slate-500 hover:text-slate-700 px-4 py-2 rounded-lg hover:bg-slate-100 transition-colors"
             >
               Change API Key
             </button>
@@ -128,34 +132,42 @@ const Index = () => {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Hero Section */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* Enhanced Hero Section */}
         {!results && (
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              Strategic Account Intelligence
-            </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-8">
-              Generate deep, actionable insights that make you sound like you've studied 
-              the company for hours, powered by advanced AI analysis.
-            </p>
-            
-            {/* Features */}
-            <div className="grid md:grid-cols-3 gap-6 max-w-3xl mx-auto mb-8">
-              <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-                <Zap className="h-8 w-8 text-blue-600 mx-auto mb-3" />
-                <h3 className="font-semibold text-gray-900 mb-2">AI-Powered Analysis</h3>
-                <p className="text-sm text-gray-600">Advanced prompting with Gemini 2.0</p>
-              </div>
-              <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-                <Target className="h-8 w-8 text-blue-600 mx-auto mb-3" />
-                <h3 className="font-semibold text-gray-900 mb-2">Strategic Insights</h3>
-                <p className="text-sm text-gray-600">Business intelligence beyond surface facts</p>
-              </div>
-              <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-                <Briefcase className="h-8 w-8 text-blue-600 mx-auto mb-3" />
-                <h3 className="font-semibold text-gray-900 mb-2">Ready-to-Send</h3>
-                <p className="text-sm text-gray-600">Personalized outreach templates</p>
+          <div className="text-center mb-12">
+            <div className="max-w-4xl mx-auto">
+              <h2 className="text-5xl font-bold bg-gradient-to-r from-slate-900 via-blue-800 to-indigo-900 bg-clip-text text-transparent mb-6">
+                Strategic Account Intelligence
+              </h2>
+              <p className="text-xl text-slate-600 leading-relaxed mb-12 max-w-3xl mx-auto">
+                Generate deep, actionable insights that make you sound like you've studied 
+                the company for hours. Powered by advanced AI analysis for executive-level personalization.
+              </p>
+              
+              {/* Enhanced Features */}
+              <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto mb-12">
+                <div className="group bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-slate-200/60 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                  <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-4 rounded-xl w-fit mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                    <Zap className="h-8 w-8 text-white" />
+                  </div>
+                  <h3 className="font-bold text-slate-900 mb-3 text-lg">AI-Powered Analysis</h3>
+                  <p className="text-slate-600">Advanced prompting with Gemini 2.0 for McKinsey-quality insights</p>
+                </div>
+                <div className="group bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-slate-200/60 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                  <div className="bg-gradient-to-br from-emerald-500 to-emerald-600 p-4 rounded-xl w-fit mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                    <Target className="h-8 w-8 text-white" />
+                  </div>
+                  <h3 className="font-bold text-slate-900 mb-3 text-lg">Strategic Intelligence</h3>
+                  <p className="text-slate-600">Business intelligence beyond surface facts with quantified insights</p>
+                </div>
+                <div className="group bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-slate-200/60 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                  <div className="bg-gradient-to-br from-purple-500 to-purple-600 p-4 rounded-xl w-fit mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                    <Sparkles className="h-8 w-8 text-white" />
+                  </div>
+                  <h3 className="font-bold text-slate-900 mb-3 text-lg">Executive-Ready Templates</h3>
+                  <p className="text-slate-600">Personalized outreach templates for C-level engagement</p>
+                </div>
               </div>
             </div>
           </div>
